@@ -1,0 +1,23 @@
+create pluggable database bankpdb admin user bankadm identified by bankadm roles=(DBA) file_name_convert=('pdbseed', 'banksystem');
+
+drop pluggable DATABASE bankpdb including datafiles;
+ALTER PLUGGABLE DATABASE bankpdb OPEN READ WRITE;
+
+CREATE USER bankcm IDENTIFIED BY bankcm;
+CREATE USER bankcsr IDENTIFIED BY bankcsr;
+CREATE USER bankca IDENTIFIED BY bankca;
+CREATE USER customer IDENTIFIED BY customer;
+
+GRANT CREATE SESSION TO BANKCM; 
+GRANT CREATE SESSION TO BANKCSR; 
+GRANT CREATE SESSION TO BANKCA; 
+GRANT CREATE SESSION TO CUSTOMER; 
+
+---
+GRANT CREATE SESSION TO BANKADM;
+GRANT CREATE TABLE TO BANKADM;
+ALTER USER BANKADM QUOTA UNLIMITED ON SYSTEM;
+SELECT DEFAULT_TABLESPACE, TEMPORARY_TABLESPACE FROM DBA_USERS WHERE USERNAME='BANKCM';
+
+--- Connect to admin user
+conn bankadm/bankadm@localhost:1521/bankpdb;
