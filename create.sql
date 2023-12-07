@@ -1,59 +1,59 @@
 -- Active: 1701874576202@@localhost@1521@bankpdb@SYSTEM
 CREATE TABLE USER (  
-    id NUMBER GENERATED AS IDENTITY PRIMARY KEY,
-    create_time DATE,
-    name VARCHAR2(255),
-    email VARCHAR2(255),
-    gender VARCHAR2(255),
-    dob DATE,
-    phone_num NUMBER,
-    pwd VARCHAR2(255)
+    uid           NUMBER         NOT NULL,
+    create_time   DATE,
+    uname         VARCHAR2(255), NOT NULL
+    email         VARCHAR2(25),  NOT NULL
+    gender        CHAR(1),
+    dob           DATE,          NOT NULL
+    phone_num     NUMBER,        NOT NULL
+    cccd          NUMBER(12)     UNIQUE NOT NULL
+    pwd           VARCHAR2(255)  NOT NULL
+    CONSTRAINT user_pk
+      PRIMARY KEY(uid)
 );
 
 
 CREATE TABLE STAFF (  
-   uid NUMBER,
-   staff_id GENERATED AS IDENTITY PRIMARY KEY,
-   job_postion VARCHAR2(255)
+   uid            NUMBER,        NOT NULL
+   staff_id       NUMBER(4)      NOT NULL
+   job_postion    VARCHAR2(3)    NOT NULL -- CA, CM, CS
 );
 
 CREATE TABLE CUSTOMER (  
-   uid NUMBER,
-   c_id GENERATED AS IDENTITY PRIMARY KEY,
-   job VARCHAR2(255),
-   addr VARCHAR2(255)
+   uid            NUMBER,  NOT NULL
+   c_id           NUMBER   NOT NULL
+   job            VARCHAR2(50),
+   addr           VARCHAR2(255)
 );
 
 CREATE TABLE APPLICATIONS (
-   id NUMBER GENERATED AS IDENTITY PRIMARY KEY,
-   acc_type NCHAR,
-   _limit INTEGER,
-   c_name VARCHAR2(255),
-   c_income INTEGER,
-   c_cccd NUMBER NOT NULL,
-   c_phone_num NUMBER NOT NULL,
-   c_addr VARCHAR2(255) NOT NULL,
-   c_email VARCHAR2(255) NOT NULL,
-   status NUMBER(1, 0),
-   created_by NUMBER,
-   isApproved NUMBER(1, 0),
-   comment NVARCHAR2
+   id             NUMBER         NOT NULL
+   acc_type       CHAR(1),       NOT NULL --- Credit / Debit
+   climit         NUMBER,        NOT NULL --- account limit 
+   c_name         VARCHAR2(255), NOT NULL
+   c_income       NUMBER,        NOT NULL
+   c_cccd         NUMBER(12)     NOT NULL,
+   c_phone_num    NUMBER         NOT NULL,
+   c_addr         VARCHAR2(255)  NOT NULL,
+   c_email        VARCHAR2(255)  NOT NULL,
+   status         NUMBER(1, 0),  NOT NULL
+   created_by     NUMBER,
+   isApproved     CHAR(1),       --- Approved / Rejected / None
+   cm_comment     CLOB
 );
 
 CREATE TABLE BANK_ACCOUNT (
-   acc_num NUMBER(9) PRIMARY KEY,
-   typ VARCHAR2(255) NOT NULL,
-   _limit INTEGER NOT NULL,
-   c_id NUMBER,
-   created_by NUMBER
-   created_date DATE,
+   acc_num        NUMBER         NOT NULL,
+   typ            CHAR(1)        NOT NULL,
+   climit         NUMBER        NOT NULL,
+   c_id           NUMBER,
+   created_by     NUMBER
+   created_date   DATE,
 );
 
 CREATE TABLE ANALYZE (
-   a_id NUMBER --Application id
-   s_id NUMBER --staff id
-   analysis NVARCHAR2(255)
+   a_id           NUMBER -- Application id
+   s_id           NUMBER -- Staff id
+   analysis       CLOB
 )
-
-COMMENT ON TABLE table_name IS '';
-COMMENT ON COLUMN table_name. IS ''
