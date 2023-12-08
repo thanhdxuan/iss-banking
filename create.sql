@@ -78,3 +78,19 @@ begin
   return (utl_raw.overlay(utl_raw.bit_or(utl_raw.bit_and(utl_raw.substr(v_uuid, 7, 1), '0F'), '40'), v_uuid, 7));
 end random_uuid;
 /
+
+CREATE OR REPLACE FUNCTION app_user_password_profile
+ ( username     varchar2,
+   password     varchar2,
+   old_password varchar2)
+ return boolean IS
+BEGIN
+   -- mandatory verify function will always be evaluated regardless of the
+   -- password verify function that is associated to a particular profile/user
+   -- requires the minimum password length to be 8 characters
+   if not ora_complexity_check(password, chars => 8) then
+      return(false);
+   end if;
+   return(true);
+END;
+/
