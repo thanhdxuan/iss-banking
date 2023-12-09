@@ -54,7 +54,7 @@ END;
 /
 
 CREATE MANDATORY PROFILE c##mandatory_app_password_profile LIMIT
-   PASSWORD_GRACE_TIME			7
+   PASSWORD_GRACE_TIME        7
    PASSWORD_VERIFY_FUNCTION   bank_verify_strong_password_function;
 
 ALTER SYSTEM SET MANDATORY_USER_PROFILE = c##mandatory_app_password_profile;
@@ -66,6 +66,6 @@ CREATE PROFILE bank_app_password_profile LIMIT
    PASSWORD_REUSE_TIME        3
    PASSWORD_REUSE_MAX         3
    PASSWORD_LOCK_TIME         365 --- The number of days an account will be locked after the specified number of consecutive failed login attempts.
-   PASSWORD_GRACE_TIME			7
+   PASSWORD_GRACE_TIME        7
    INACTIVE_ACCOUNT_TIME      360
    PASSWORD_ROLLOVER_TIME     0;
