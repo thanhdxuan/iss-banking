@@ -38,7 +38,29 @@ commit;
 
  --- Password profile
 
-CREATE PROFILE app_user_password_profile LIMIT
+conn sys as sysdba;
+
+CREATE OR REPLACE FUNCTION bank_verify_strong_password_function
+ ( username     varchar2,
+   password     varchar2,
+   old_password varchar2)
+ return boolean IS
+BEGIN
+   if not ora_complexity_check(password, chars => 8, uppercase => 1, lowercase => 1, digit => 1, special => 1) then
+      return(false);
+   end if;
+   return(true);
+END;
+/
+
+CREATE MANDATORY PROFILE c##mandatory_app_password_profile LIMIT
+   PASSWORD_GRACE_TIME			7
+   PASSWORD_VERIFY_FUNCTION   bank_verify_strong_password_function;
+
+ALTER SYSTEM SET MANDATORY_USER_PROFILE = c##mandatory_app_password_profile;
+conn bankadm/bankadm@localhost:1521/bankpdb;
+
+CREATE PROFILE bank_app_password_profile LIMIT
    FAILED_LOGIN_ATTEMPTS      5
    PASSWORD_LIFE_TIME         90 --- The password expires if it is not changed within the grace period (define in PASSWORD_GRACE_TIME), and further connections are rejected.
    PASSWORD_REUSE_TIME        3
@@ -46,5 +68,4 @@ CREATE PROFILE app_user_password_profile LIMIT
    PASSWORD_LOCK_TIME         365 --- The number of days an account will be locked after the specified number of consecutive failed login attempts.
    PASSWORD_GRACE_TIME			7
    INACTIVE_ACCOUNT_TIME      360
-   PASSWORD_VERIFY_FUNCTION   bank_verify_strong_password_function
    PASSWORD_ROLLOVER_TIME     0;
