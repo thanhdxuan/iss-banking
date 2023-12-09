@@ -8,7 +8,6 @@ CREATE TABLE USERS (
    dob           DATE           NOT NULL,
    phone_num     NUMBER         NOT NULL,
    cccd          CHAR(12)       UNIQUE NOT NULL,
-   pwd           VARCHAR2(255)  NOT NULL,
    CONSTRAINT user_pk PRIMARY KEY(uuid)
 );
 
