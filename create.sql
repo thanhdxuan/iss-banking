@@ -63,7 +63,9 @@ CREATE TABLE BANK_ACCOUNT (
 CREATE TABLE ANALYZE (
    a_id           INTEGER, -- Application id
    s_id           INTEGER, -- Staff id
-   analysis       CLOB NOT NULL,
+   analysis       CLOB,
+   last_updated   TIMESTAMP,
+   isRead         CHAR(1) NOT NULL, --- Y/N
    CONSTRAINT analyze_pk PRIMARY KEY (a_id, s_id),
    CONSTRAINT analyze_application_fk FOREIGN KEY (a_id) REFERENCES APPLICATIONS(id),
    CONSTRAINT analyze_staff_fk FOREIGN KEY (s_id) REFERENCES STAFFS(staff_id)
