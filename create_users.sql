@@ -1,0 +1,5 @@
+BEGIN
+    FOR i IN (SELECT * FROM USERS ) LOOP
+        EXECUTE IMMEDIATE 'CREATE USER ' || i.uuid || ' IDENTIFIED BY ' || i.uuid;
+    END LOOP;
+END;
