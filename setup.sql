@@ -38,6 +38,8 @@ commit;
 
  --- Password profile
 
+PROMPT Creating password profile ...
+PROMPT Enter password of user 'sys'
 conn sys as sysdba;
 
 CREATE OR REPLACE FUNCTION bank_verify_strong_password_function
