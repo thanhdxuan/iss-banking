@@ -3,6 +3,7 @@ CREATE TABLE USERS (
    uuid          RAW(16)         NOT NULL,
    create_time   DATE,
    uname         VARCHAR2(255)  NOT NULL,
+   username      VARCHAR2(25)   NOT NULL,
    email         VARCHAR2(25)   NOT NULL,
    gender        CHAR(1),
    dob           DATE           NOT NULL,
