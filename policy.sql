@@ -63,9 +63,10 @@ GRANT SELECT ON CUSTOMERS TO CREDIT_MANAGER_ROLE;
 GRANT SELECT ON USERS TO CREDIT_MANAGER_ROLE;
 GRANT SELECT ON STAFFS TO CREDIT_MANAGER_ROLE;
 GRANT SELECT ON ANALYZE TO CREDIT_MANAGER_ROLE;
+GRANT DELETE ON ANALYZE TO CREDIT_MANAGER_ROLE;
+GRANT DELETE ON APPLICATIONS TO CREDIT_MANAGER_ROLE;
 GRANT UPDATE (status) ON APPLICATIONS TO CREDIT_MANAGER_ROLE;
 GRANT UPDATE (isApproved, cm_comment) ON APPLICATIONS TO CREDIT_MANAGER_ROLE;
-GRANT DELETE ON APPLICATIONS TO CREDIT_MANAGER_ROLE;
 
 BEGIN
     FOR i IN (SELECT USERNAME FROM STAFFS s, USERS u WHERE S.JOB_POSTION = 'CM' AND S.UUID = u.UUID) LOOP
@@ -96,6 +97,7 @@ BEGIN
         policy_name => 'USERS_POLICY'
     );
 END;
+/
 CREATE OR REPLACE FUNCTION user_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
@@ -120,7 +122,6 @@ BEGIN
         statement_types => 'SELECT, UPDATE'
     );
 END;
-/
 
 /
 --- DROP FUNCTION user_policy_function
@@ -144,7 +145,7 @@ BEGIN
     :NEW.cm_comment := NULL;
 END;
 
-
+/
 --- VPD cho applications
 --- DROP 
 BEGIN
@@ -154,6 +155,7 @@ BEGIN
         policy_name => 'applications_policy_function'
     );
 END;
+/
 CREATE OR REPLACE FUNCTION applications_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
@@ -239,18 +241,44 @@ BEGIN
         policy_name => 'analyze_policy_function'
     );
 END;
+/
 CREATE OR REPLACE FUNCTION analyze_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
 ) RETURN VARCHAR2 AS
     v_policy VARCHAR2(1000);
-    user_id VARCHAR2(100);
 BEGIN
-    user_id := SYS_CONTEXT('users_ctx', 'uuid');
-    v_policy := 's_id IS (SELECT staff_id FROM STAFFS WHERE uuid = SYS_CONTEXT(''users_ctx'', ''uuid''))';
+    if SYS_CONTEXT('USERENV','SESSION_USER') = 'BANKADM' THEN
+        v_policy := '1 = 1';
+        RETURN v_policy;
+    END IF;
+    IF SYS_CONTEXT('SYS_SESSION_ROLES','CREDIT_MANAGER_ROLE') = 'TRUE' THEN
+        v_policy := '1 = 1';
+        RETURN v_policy;
+    END IF;
+
+    IF SYS_CONTEXT('SYS_SESSION_ROLES','CREDIT_ANALYST_ROLE') = 'TRUE' THEN
+        v_policy := 's_id IN (SELECT staff_id FROM STAFFS WHERE uuid = SYS_CONTEXT(''users_ctx'', ''uuid''))';
+        RETURN v_policy;
+    END IF;
+
     RETURN v_policy;
 END;
 /
+--- TEST output của VPD ANALYZE
+-- DECLARE
+--     v_policy VARCHAR2(1000);
+-- BEGIN
+--     if SYS_CONTEXT('USERENV','SESSION_USER') = 'BANKADM' THEN
+--         v_policy := '1 = 1';
+--     ELSIF SYS_CONTEXT('SYS_SESSION_ROLES','CREDIT_MANAGER_ROLE') = 'TRUE' THEN
+--         v_policy := '1 = 1';
+--     ELSE
+--         v_policy := 's_id IN (SELECT staff_id FROM STAFFS WHERE uuid = SYS_CONTEXT(''users_ctx'', ''uuid''))';
+--     END IF;
+--     DBMS_OUTPUT.PUT_LINE(v_policy);
+-- END;
+-- /
 BEGIN
     DBMS_RLS.ADD_POLICY(
         object_schema => 'BANKADM',
@@ -258,11 +286,10 @@ BEGIN
         policy_name => 'analyze_policy_function',
         function_schema => 'BANKADM',
         policy_function => 'analyze_policy_function',
-        statement_types => 'SELECT, UPDATE, DELETE'
+        statement_types => 'SELECT'
     );
 END;
 /
---- TEST output của VPD ANALYZE
 
 
 
@@ -288,6 +315,7 @@ BEGIN
     v_policy := 'last_updated is NULL';
     RETURN v_policy;
 END;
+/
 BEGIN
     DBMS_RLS.ADD_POLICY(
         object_schema => 'BANKADM',
@@ -306,6 +334,16 @@ BEGIN
     :NEW.last_updated := SYSTIMESTAMP;
 END;
 /
+--- Analyze update khi chưa được phê duyệt
+--- DROP analyze_update_policy_function
+BEGIN
+    DBMS_RLS.DROP_POLICY(
+        object_schema => 'BANKADM',
+        object_name => 'ANALYZE',
+        policy_name => 'analyze_update_policy_function'
+    );
+END;
+/
 CREATE OR REPLACE FUNCTION analyze_update_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
@@ -319,7 +357,6 @@ BEGIN
     END IF;
     RETURN v_policy;
 END;
-
 
 /
 BEGIN
