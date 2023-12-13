@@ -88,6 +88,14 @@ BEGIN
 END;
 /
 --- VPD user chỉ có thể xem thông tin của mình
+--- DROP_POLICY user_policy_function
+BEGIN
+    DBMS_RLS.DROP_POLICY(
+        object_schema => 'BANKADM',
+        object_name => 'USERS',
+        policy_name => 'USERS_POLICY'
+    );
+END;
 CREATE OR REPLACE FUNCTION user_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
@@ -113,14 +121,7 @@ BEGIN
     );
 END;
 /
---- DROP_POLICY user_policy_function
-BEGIN
-    DBMS_RLS.DROP_POLICY(
-        object_schema => 'BANKADM',
-        object_name => 'USERS',
-        policy_name => 'USERS_POLICY'
-    );
-END;
+
 /
 --- DROP FUNCTION user_policy_function
 --- Role của nhân viên ngân hàng
@@ -145,6 +146,14 @@ END;
 
 
 --- VPD cho applications
+--- DROP 
+BEGIN
+    DBMS_RLS.DROP_POLICY(
+        object_schema => 'BANKADM',
+        object_name => 'APPLICATIONS',
+        policy_name => 'applications_policy_function'
+    );
+END;
 CREATE OR REPLACE FUNCTION applications_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
@@ -189,14 +198,7 @@ BEGIN
     );
 END;
 /
---- DROP 
-BEGIN
-    DBMS_RLS.DROP_POLICY(
-        object_schema => 'BANKADM',
-        object_name => 'APPLICATIONS',
-        policy_name => 'applications_policy_function'
-    );
-END;
+
 DECLARE
     v_policy VARCHAR2(1000);
     user_id VARCHAR2(100);
@@ -229,6 +231,14 @@ END;
 
 /
 --- VPD cho ANALYZE
+--- DROP analyze_policy_function
+BEGIN
+    DBMS_RLS.DROP_POLICY(
+        object_schema => 'BANKADM',
+        object_name => 'ANALYZE',
+        policy_name => 'analyze_policy_function'
+    );
+END;
 CREATE OR REPLACE FUNCTION analyze_policy_function (
     schema_name IN VARCHAR2,
     table_name IN VARCHAR2
@@ -254,14 +264,7 @@ END;
 /
 --- TEST output của VPD ANALYZE
 
---- DROP analyze_policy_function
-BEGIN
-    DBMS_RLS.DROP_POLICY(
-        object_schema => 'BANKADM',
-        object_name => 'ANALYZE',
-        policy_name => 'analyze_policy_function'
-    );
-END;
+
 
 --- Redaction policy CSR bị ẩn đi các thông tin c_income của khách hàng
 BEGIN
