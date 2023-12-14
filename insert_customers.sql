@@ -2,22 +2,22 @@
 INSERT INTO CUSTOMERS (uuid, job, addr)
 SELECT uuid, 'Software Engineer', '123 Main St'
 FROM USERS
-WHERE USERS.uname = 'Robert Davis';
+WHERE USERS.username = 'robert';
 
 -- Inserting customer 2
 INSERT INTO CUSTOMERS (uuid, job, addr)
 SELECT uuid, 'Teacher', '456 Elm St'
 FROM USERS
-WHERE USERS.uname = 'Daniel Lee';
+WHERE USERS.username = 'daniel';
 
 -- Inserting customer 3
 INSERT INTO CUSTOMERS (uuid, job, addr)
 SELECT uuid, 'Doctor', '789 Oak St'
 FROM USERS
-WHERE USERS.uname = 'Olivia Adams';
+WHERE USERS.username = 'olivia';
 
 -- Inserting customer 4
 INSERT INTO CUSTOMERS (uuid, job, addr)
 SELECT uuid, 'Lawyer', '321 Pine St'
 FROM USERS
-WHERE USERS.uname = 'Sarah Thompson';
+WHERE USERS.username = 'sarah';

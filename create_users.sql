@@ -6,6 +6,19 @@ BEGIN
     END LOOP;
 END;
 /
+DROP TRIGGER create_user_trig;
+CREATE OR REPLACE TRIGGER create_user_trig 
+AFTER INSERT ON USERS
+FOR EACH ROW
+DECLARE
+    v_username VARCHAR2(30);
+BEGIN
+    v_username := :NEW.username;
+    EXECUTE IMMEDIATE 'CREATE USER ' || v_username || ' IDENTIFIED BY "@Aa12345678"';
+    -- EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO ' || v_username;
+    -- DBMS_OUTPUT.PUT_LINE('CREATE USER ' || v_username || ' IDENTIFIED BY "@Aa12345678"');
+END;
+/
 CREATE OR REPLACE CONTEXT users_ctx USING users_ctx_pkg;
 
 CREATE OR REPLACE PACKAGE users_ctx_pkg IS

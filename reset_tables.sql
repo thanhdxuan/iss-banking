@@ -5,6 +5,9 @@ BEGIN
 END;
 /
 @@create.sql
+-- @@create_users.sql
+-- @@create_role.sql
+
 @@insert_users.sql
 @@insert_staffs.sql
 @@insert_customers.sql
