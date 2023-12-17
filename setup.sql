@@ -13,10 +13,10 @@ DROP USER bankcsr CASCADE;
 DROP USER bankca CASCADE;
 DROP USER customer CASCADE;
 
-GRANT CREATE SESSION TO BANKCM; 
-GRANT CREATE SESSION TO BANKCSR; 
-GRANT CREATE SESSION TO BANKCA; 
-GRANT CREATE SESSION TO CUSTOMER; 
+-- GRANT CREATE SESSION TO BANKCM; 
+-- GRANT CREATE SESSION TO BANKCSR; 
+-- GRANT CREATE SESSION TO BANKCA; 
+-- GRANT CREATE SESSION TO CUSTOMER; 
 
 ---
 GRANT CREATE SESSION TO BANKADM;
@@ -37,7 +37,9 @@ conn bankadm/bankadm@localhost:1521/bankpdb;
 @@insert_users.sql
 @@insert_staffs.sql
 @@insert_customers.sql
-
+@@create_users.sql
+@@create_role.sql
+@@policies.sql
 commit;
 
  --- Password profile
