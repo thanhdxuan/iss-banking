@@ -34,3 +34,50 @@ VALUES (random_uuid(), SYSDATE, 'BANK CSR','bankcsr', 'bankcsr@example.com','M',
 INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
 VALUES (random_uuid(), SYSDATE, 'Emma Wilson','emma', 'emma@example.com', 'F', TO_DATE('1993-06-25', 'YYYY-MM-DD'), 1111111111, '666666666666');
 
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Cus 1','customer1', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1121111111, '666666661666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Cus 2','customer2', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1141111111, '666661661666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Cus 3','customer3', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1151111111, '666616666666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Cus 4','customer4', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1161111111, '666666664666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Cus 5','customer5', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636666666');
+
+
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 1','bankca01', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636666666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 2','bankca02', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636626666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 3','bankca03', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636696666');
+
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 4','bankcsr01', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636636666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 5','bankcsr02', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636926666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 6','bankcsr03', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636196666');
+
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 7','bankcsr04', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636566666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 8','bankcsr05', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636726666');
+
+INSERT INTO USERS (uuid, create_time, uname, username, email, gender, dob, phone_num, cccd)
+VALUES (random_uuid(), SYSDATE, 'Staff 9','bankcsr06', 'emma@example.com', 'F', TO_DATE('1990-06-25', 'YYYY-MM-DD'), 1171111111, '666636996666');
+
+

@@ -21,3 +21,29 @@ INSERT INTO CUSTOMERS (uuid, job, addr)
 SELECT uuid, 'Lawyer', '321 Pine St'
 FROM USERS
 WHERE USERS.username = 'sarah';
+
+-- Inserting customer 5
+INSERT INTO CUSTOMERS (uuid, job, addr)
+SELECT uuid, 'Doctor', '221 Pine St'
+FROM USERS
+WHERE USERS.username = 'customer1';
+
+INSERT INTO CUSTOMERS (uuid, job, addr)
+SELECT uuid, 'Doctor', '221 Pine St'
+FROM USERS
+WHERE USERS.username = 'customer2';
+
+INSERT INTO CUSTOMERS (uuid, job, addr)
+SELECT uuid, 'Doctor', '221 Pine St'
+FROM USERS
+WHERE USERS.username = 'customer3';
+
+INSERT INTO CUSTOMERS (uuid, job, addr)
+SELECT uuid, 'Doctor', '221 Pine St'
+FROM USERS
+WHERE USERS.username = 'customer4';
+
+INSERT INTO CUSTOMERS (uuid, job, addr)
+SELECT uuid, 'Doctor', '221 Pine St'
+FROM USERS
+WHERE USERS.username = 'customer5';

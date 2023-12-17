@@ -1,24 +1,28 @@
 BEGIN
     FOR t IN (SELECT username from USERS)
     LOOP
-        EXECUTE IMMEDIATE 'CREATE USER ' || t.username || ' IDENTIFIED BY "@Aa12345678"';                            
-        EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO ' || t.username;
+        -- EXECUTE IMMEDIATE 'CREATE USER ' || t.username || ' IDENTIFIED BY "@Aa12345678"';                            
+        EXECUTE IMMEDIATE 'GRANT RESTRICTED SESSION TO ' || t.username;
     END LOOP;
 END;
 /
-DROP TRIGGER create_user_trig;
+
 CREATE OR REPLACE TRIGGER create_user_trig 
 AFTER INSERT ON USERS
 FOR EACH ROW
 DECLARE
-    v_username VARCHAR2(30);
+    PRAGMA AUTONOMOUS_TRANSACTION;    
 BEGIN
-    v_username := :NEW.username;
-    EXECUTE IMMEDIATE 'CREATE USER ' || v_username || ' IDENTIFIED BY "@Aa12345678"';
+    EXECUTE IMMEDIATE 'CREATE USER ' || :NEW.username || ' IDENTIFIED BY "@Aa12345678"';
+    COMMIT;
+    EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO ' || :NEW.username;
+    COMMIT;
     -- EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO ' || v_username;
     -- DBMS_OUTPUT.PUT_LINE('CREATE USER ' || v_username || ' IDENTIFIED BY "@Aa12345678"');
 END;
 /
+
+
 CREATE OR REPLACE CONTEXT users_ctx USING users_ctx_pkg;
 
 CREATE OR REPLACE PACKAGE users_ctx_pkg IS

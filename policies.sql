@@ -47,14 +47,14 @@ END;
 /
 -------------------------------------------------------------
 --- VPD cho applications
--- BEGIN
---     DBMS_RLS.DROP_POLICY(
---         policy_name => 'applications_policy',
---         object_schema => 'BANKADM',
---         object_name => 'APPLICATIONS'
---     );
--- END;
--- /
+BEGIN
+    DBMS_RLS.DROP_POLICY(
+        policy_name => 'applications_policy',
+        object_schema => 'BANKADM',
+        object_name => 'APPLICATIONS'
+    );
+END;
+/
 --- GRANT EXECUTE ON applications_policy_function TO DANIEL;
 --- GRANT EXECUTE ON applications_policy_function TO BANKCM;
 CREATE OR REPLACE FUNCTION applications_policy_function (
@@ -76,11 +76,11 @@ BEGIN
     EXECUTE IMMEDIATE 'SELECT job_postion, STAFF_ID FROM STAFFS WHERE uuid = :1' INTO job_position, staff_id USING user_id;
     -- SELECT job_postion, STAFF_ID INTO job_position, staff_id FROM STAFFS WHERE uuid = user_id;
     IF job_position = 'CA' THEN
-        v_policy := 'status = 1 AND id IN (SELECT a_id FROM ANALYZE WHERE s_id = ' || staff_id || ')';
+        v_policy := 'id IN (SELECT a_id FROM ANALYZE WHERE s_id = ' || staff_id || ')';
     ELSIF job_position = 'CM' THEN
         v_policy := '1 = 1';
     ELSIF job_position = 'CS' THEN
-        v_policy := 'status = 0 OR isApproved = ''A''';
+        v_policy := '1 = 1';
     END IF;
     RETURN v_policy;
 EXCEPTION
@@ -251,3 +251,9 @@ BEGIN
     );
 END;
 /
+
+CREATE AUDIT POLICY applications_audit_policy
+    ACTIONS DELETE on APPLICATIONS,
+            INSERT on APPLICATIONS,
+            UPDATE on APPLICATIONS,
+            ALL on ANALYZE;
